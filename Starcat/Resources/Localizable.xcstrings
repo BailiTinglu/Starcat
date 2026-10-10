@@ -372224,6 +372224,108 @@
         }
       }
     },
+    "settings.pro.direct.error.invalidResponse" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The license service returned an unexpected response. Please try again later."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "授权服务返回异常响应，请稍后重试。"
+          }
+        }
+      }
+    },
+    "settings.pro.direct.error.licenseNotFound" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This license key was not found. Check that you copied the entire key, or contact support if you have already paid."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未找到此授权码，请检查是否复制完整；如已付款，请联系支持。"
+          }
+        }
+      }
+    },
+    "settings.pro.direct.error.licenseRejected" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This license is no longer active. Check your subscription status or contact support."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此授权已失效，请检查订阅状态或联系支持。"
+          }
+        }
+      }
+    },
+    "settings.pro.direct.error.temporaryServerFailure" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The license service is temporarily unavailable (HTTP %d). Please try again later."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "授权服务暂时不可用（HTTP %d），请稍后重试。"
+          }
+        }
+      }
+    },
+    "settings.pro.direct.error.transport" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to connect to the license service. Check your network and try again."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法连接授权服务，请检查网络后重试。"
+          }
+        }
+      }
+    },
+    "settings.pro.direct.error.unauthorizedClient" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "License service authentication failed. Update Starcat or contact support."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "授权服务验证失败，请更新 Starcat 或联系支持。"
+          }
+        }
+      }
+    },
     "settings.pro.direct.error.activationLimitReached" : {
       "extractionState" : "manual",
       "localizations" : {
