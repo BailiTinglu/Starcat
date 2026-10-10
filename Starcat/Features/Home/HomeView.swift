@@ -68,6 +68,8 @@ struct HomeView: View {
 
     /// HOM-47：Release 时间线 sheet 显示状态。
     @State private var showReleaseTimeline: Bool = false
+    /// 批量整理必须挂到发起操作的主窗口，不能误用状态 popover 或其它 Scene 的焦点窗口。
+    @State private var batchAIParentWindow = WorkspaceSceneWindowReference()
     /// Widget Release Deep Link 的一次性定位目标；普通 Sidebar 入口保持为 nil。
     @State private var releaseTimelineTargetID: Int64?
 
@@ -311,6 +313,10 @@ struct HomeView: View {
 
     var body: some View {
         navigationWithLifecycle
+            .background {
+                WorkspaceSceneWindowReader(reference: batchAIParentWindow, minimumContentSize: nil)
+                    .frame(width: 0, height: 0)
+            }
     }
 
     private var baseNavigation: AnyView {
@@ -2385,6 +2391,7 @@ struct HomeView: View {
         scope: BatchAIRepositoryScope,
         skippedTaggedCount: Int = 0
     ) async {
+        AppLog.ui.info("[batch-ai-window] Requested mode=preflight")
         batchAIOptions.actions = [.tags]
         batchAIOptions.codeContextEnabledOverride = false
         batchAIOptions.externalContextEnabledOverride = false
@@ -2414,6 +2421,7 @@ struct HomeView: View {
         )
         BatchAIWorkspaceWindowController.present(
             dependencies: dependencies,
+            parentWindow: batchAIParentWindow.window,
             initialMode: .preflight(context),
             options: $batchAIOptions,
             hasUsableExternalSearchProvider: hasUsableExternalSearchProvider,
@@ -2475,8 +2483,10 @@ struct HomeView: View {
 
     /// 队列在窗口关闭后继续运行；状态入口只重新挂载审核工作区，不创建或覆盖任务。
     private func presentBatchAIProgress() {
+        AppLog.ui.info("[batch-ai-window] Requested mode=review")
         BatchAIWorkspaceWindowController.present(
             dependencies: dependencies,
+            parentWindow: batchAIParentWindow.window,
             initialMode: .review,
             options: $batchAIOptions,
             hasUsableExternalSearchProvider: hasUsableExternalSearchProvider,

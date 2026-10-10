@@ -28,6 +28,8 @@ struct AppStatusToolbarButton: View {
     let onShowBatchAIPanel: (() -> Void)?
 
     @State private var isPresented = false
+    /// 先结束 popover 的展示生命周期，再交给主窗口挂载模态 sheet。
+    @State private var opensBatchAIAfterDismissal = false
     @State private var diagnosticSummary: DiagnosticLogSummary = .empty
     /// Toolbar 与设置页必须观察同一个配置实例，端口冲突才能即时反映到全局状态。
     @State private var pluginConfiguration = CompanionConfiguration.shared
@@ -92,7 +94,11 @@ struct AppStatusToolbarButton: View {
                     onOpenMCP: { openSettings(tab: "mcp") },
                     onOpenBrowserPlugin: { openSettings(tab: "integrations.browserPlugin") },
                     onOpenAIUsage: { AIUsageWindowController.show(dependencies: dependencies) },
-                    onShowBatchAIPanel: onShowBatchAIPanel,
+                    onShowBatchAIPanel: {
+                        guard onShowBatchAIPanel != nil else { return }
+                        opensBatchAIAfterDismissal = true
+                        isPresented = false
+                    },
                     onOpenGeneralSettings: { openSettings(tab: "general") },
                     onOpenAbout: { AboutWindowController.show() },
                     onOpenStorage: { openSettings(tab: "storage") },
@@ -109,6 +115,14 @@ struct AppStatusToolbarButton: View {
             }
             .frame(maxHeight: 640)
             .appLocaleEnvironment()
+            .onDisappear {
+                guard opensBatchAIAfterDismissal else { return }
+                opensBatchAIAfterDismissal = false
+                // 不在 SwiftUI 拆除 popover 的回调栈里 beginSheet，避免重入 presentation bridge。
+                DispatchQueue.main.async {
+                    onShowBatchAIPanel?()
+                }
+            }
             .task {
                 await refreshDiagnostics()
                 await dependencies.serviceAvailabilityMonitor.refreshNow()

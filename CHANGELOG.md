@@ -20,6 +20,7 @@ Release notes for the Mac App Store edition of Starcat.
 
 ### Fixes
 
+- Tag organization window: Opening Background Tasks from the status panel now closes the popover first, and both entry points use the originating main window to avoid attaching to the wrong window.
 - CLI pairing: With the updated CLI, fixes pairing failures on some networks and provides a re-pairing hint when the certificate changes.
 
 ## 1.8.0
